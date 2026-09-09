@@ -138,6 +138,78 @@ button:hover {
   line-height: 1.4;
 }
 
+.hint {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+.section-title {
+  margin: 36px 0 4px;
+  font-size: 1.2rem;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+
+.section-desc {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.inclusion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 360px;
+}
+
+.inclusion-cell {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 8px;
+  text-align: center;
+}
+
+.inclusion-cell.empty {
+  opacity: 0.4;
+}
+
+.inclusion-cell .digit {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.inclusion-cell .repeat {
+  margin-top: 6px;
+  font-size: 1.3rem;
+  color: var(--accent);
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  word-break: break-all;
+}
+
+.rdv-card {
+  margin-top: 4px;
+}
+
+.rdv-result {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.rdv-result .number {
+  font-size: 2.4rem;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.rdv-result .desc {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
 .app-footer {
   margin-top: 32px;
   text-align: center;

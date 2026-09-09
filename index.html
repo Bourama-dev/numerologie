@@ -15,22 +15,56 @@
 
     <form id="numero-form" class="card">
       <div class="field">
-        <label for="fullname">Nom complet de naissance</label>
-        <input type="text" id="fullname" placeholder="ex : Marie Claire Dupont" required autocomplete="off">
+        <label for="lastname">Nom de famille à la naissance</label>
+        <input type="text" id="lastname" placeholder="ex : Dabadie" required autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="firstnames">Prénom(s) (séparés par un espace)</label>
+        <input type="text" id="firstnames" placeholder="ex : Pascal Marc Armand" required autocomplete="off">
+        <small class="hint">Le premier prénom saisi est utilisé comme prénom usuel.</small>
       </div>
       <div class="field">
         <label for="birthdate">Date de naissance</label>
         <input type="date" id="birthdate" required>
       </div>
-      <button type="submit">Calculer mon profil</button>
+      <button type="submit">Calculer mon profil complet</button>
     </form>
 
     <section id="results" class="results" hidden>
-      <div class="grid" id="results-grid"></div>
+
+      <h2 class="section-title">Les piliers</h2>
+      <div class="grid" id="pillars-grid"></div>
+
+      <h2 class="section-title">Grille d'inclusion</h2>
+      <p class="section-desc">Cumule le nom de famille et tous les prénoms — forces (nombres nombreux) et faiblesses (nombres absents).</p>
+      <div class="inclusion-grid" id="inclusion-grid"></div>
+
+      <h2 class="section-title">Les cycles de vie</h2>
+      <div class="grid" id="cycles-grid"></div>
+
+      <h2 class="section-title">Les réalisations</h2>
+      <div class="grid" id="realisations-grid"></div>
+
+      <h2 class="section-title">Les défis de vie</h2>
+      <div class="grid" id="defis-grid"></div>
+
+      <h2 class="section-title">Année personnelle</h2>
+      <div class="grid" id="annee-grid"></div>
+
+      <h2 class="section-title">Nombre de rendez-vous</h2>
+      <div class="card rdv-card">
+        <div class="field">
+          <label for="rdv-date">Date du rendez-vous</label>
+          <input type="date" id="rdv-date">
+        </div>
+        <button type="button" id="rdv-btn">Calculer le nombre du jour</button>
+        <div id="rdv-result" class="rdv-result" hidden></div>
+      </div>
+
     </section>
 
     <footer class="app-footer">
-      <p>Les calculs suivent la numérologie pythagoricienne. Les nombres maîtres (11, 22, 33) sont préservés.</p>
+      <p>Les calculs suivent la numérologie pythagoricienne. Les nombres maîtres (11, 22, 33) sont préservés pour les piliers principaux.</p>
     </footer>
   </div>
 
