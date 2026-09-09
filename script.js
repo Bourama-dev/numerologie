@@ -1,3 +1,39 @@
+const THEME_STORAGE_KEY = 'numerologie-theme';
+const DEFAULT_THEME = 'gold';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-dot').forEach((dot) => {
+    dot.classList.toggle('active', dot.dataset.themeOption === theme);
+  });
+}
+
+function initThemeSwitcher() {
+  let savedTheme = DEFAULT_THEME;
+  try {
+    savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || DEFAULT_THEME;
+  } catch (e) {
+    // localStorage indisponible (navigation privée, etc.) : on garde le thème par défaut.
+  }
+
+  applyTheme(savedTheme);
+
+  document.getElementById('theme-switcher').addEventListener('click', (event) => {
+    const button = event.target.closest('.theme-dot');
+    if (!button) return;
+
+    const theme = button.dataset.themeOption;
+    applyTheme(theme);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch (e) {
+      // Rien à faire si le stockage n'est pas disponible.
+    }
+  });
+}
+
+initThemeSwitcher();
+
 const LETTER_VALUES = {
   a: 1, j: 1, s: 1,
   b: 2, k: 2, t: 2,
