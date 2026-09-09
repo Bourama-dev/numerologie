@@ -143,6 +143,79 @@ button:hover {
   font-size: 0.78rem;
 }
 
+.error {
+  color: #e2896b;
+  font-size: 0.78rem;
+}
+
+input.invalid {
+  border-color: #e2896b;
+}
+
+.result-item .meaning {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.rdv-result .meaning {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.results-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.results-actions button {
+  width: auto;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.results-actions button:hover {
+  background: var(--accent-soft);
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+    padding: 0;
+  }
+
+  #numero-form,
+  .results-actions,
+  .rdv-card .field,
+  .rdv-card button,
+  .app-footer {
+    display: none !important;
+  }
+
+  .result-item,
+  .inclusion-cell {
+    background: white;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  .result-item .number,
+  .app-header h1,
+  .section-title {
+    color: #333;
+  }
+}
+
 .section-title {
   margin: 36px 0 4px;
   font-size: 1.2rem;

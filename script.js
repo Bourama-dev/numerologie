@@ -12,6 +12,26 @@ const LETTER_VALUES = {
 
 const MASTER_NUMBERS = new Set([11, 22, 33]);
 
+// Signification générale de chaque nombre, réutilisée dans tous les piliers.
+const NUMBER_MEANINGS = {
+  1: 'Indépendance, leadership, esprit pionnier. Besoin d\'initier et de se démarquer.',
+  2: 'Coopération, diplomatie, sensibilité. Besoin d\'harmonie et de relation à l\'autre.',
+  3: 'Créativité, expression, joie de vivre. Besoin de communiquer et de partager.',
+  4: 'Stabilité, rigueur, sens du concret. Besoin de structure et de sécurité.',
+  5: 'Liberté, adaptabilité, curiosité. Besoin de mouvement et de changement.',
+  6: 'Responsabilité, harmonie, sens du service. Besoin de prendre soin des autres.',
+  7: 'Introspection, analyse, quête de sens. Besoin de comprendre et d\'approfondir.',
+  8: 'Ambition, pouvoir, sens matériel. Besoin de réussir et de maîtriser.',
+  9: 'Générosité, idéalisme, ouverture au monde. Besoin de donner et de transmettre.',
+  11: 'Nombre maître : intuition, inspiration, sensibilité exacerbée. Vocation à éclairer les autres.',
+  22: 'Nombre maître : bâtisseur, vision à grande échelle. Vocation à concrétiser de grands projets.',
+  33: 'Nombre maître : amour inconditionnel, enseignement, guérison. Vocation à servir l\'humanité.',
+};
+
+function meaningOf(number) {
+  return NUMBER_MEANINGS[number] || '';
+}
+
 function stripAccents(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
@@ -172,6 +192,7 @@ function renderPillars(values) {
       <div class="number">${value}</div>
       <div class="label">${info.label}</div>
       <div class="desc">${info.desc}</div>
+      <div class="meaning">${meaningOf(value)}</div>
     `;
     grid.appendChild(item);
   });
@@ -212,6 +233,7 @@ function renderCycles(cycles) {
       <div class="number">${value}</div>
       <div class="label">${label}</div>
       <div class="desc">${desc}</div>
+      <div class="meaning">${meaningOf(value)}</div>
     `;
     grid.appendChild(item);
   });
@@ -228,6 +250,7 @@ function renderRealisations(realisations) {
       <div class="number">${number}</div>
       <div class="label">${index + 1}${index === 0 ? 'ère' : 'ème'} réalisation</div>
       <div class="desc">${range}</div>
+      <div class="meaning">${meaningOf(number)}</div>
     `;
     grid.appendChild(item);
   });
@@ -250,6 +273,7 @@ function renderDefis(defis) {
       <div class="number">${value}</div>
       <div class="label">${label}</div>
       <div class="desc">${desc}</div>
+      ${value > 0 ? `<div class="meaning">${meaningOf(value)}</div>` : ''}
     `;
     grid.appendChild(item);
   });
@@ -265,11 +289,60 @@ function renderPersonalYear(value, year) {
     <div class="number">${value}</div>
     <div class="label">Année personnelle ${year}</div>
     <div class="desc">Jour + mois de naissance + année en cours.</div>
+    <div class="meaning">${meaningOf(value)}</div>
   `;
   grid.appendChild(item);
 }
 
 let currentBirth = null;
+
+const NAME_PATTERN = /^[a-zàâäéèêëîïôöùûüç' -]+$/i;
+
+function showError(fieldId, message) {
+  const errorEl = document.getElementById(`${fieldId}-error`);
+  errorEl.textContent = message;
+  errorEl.hidden = false;
+}
+
+function clearError(fieldId) {
+  const errorEl = document.getElementById(`${fieldId}-error`);
+  errorEl.hidden = true;
+  errorEl.textContent = '';
+}
+
+function validateProfileForm(lastName, firstNamesRaw, birthdate) {
+  let valid = true;
+
+  clearError('lastname');
+  clearError('firstnames');
+  clearError('birthdate');
+
+  if (!lastName) {
+    showError('lastname', 'Le nom de famille est obligatoire.');
+    valid = false;
+  } else if (!NAME_PATTERN.test(lastName)) {
+    showError('lastname', 'Le nom ne doit contenir que des lettres, espaces, apostrophes ou tirets.');
+    valid = false;
+  }
+
+  if (!firstNamesRaw) {
+    showError('firstnames', 'Au moins un prénom est obligatoire.');
+    valid = false;
+  } else if (!NAME_PATTERN.test(firstNamesRaw)) {
+    showError('firstnames', 'Les prénoms ne doivent contenir que des lettres, espaces, apostrophes ou tirets.');
+    valid = false;
+  }
+
+  if (!birthdate) {
+    showError('birthdate', 'La date de naissance est obligatoire.');
+    valid = false;
+  } else if (new Date(birthdate) > new Date()) {
+    showError('birthdate', 'La date de naissance ne peut pas être dans le futur.');
+    valid = false;
+  }
+
+  return valid;
+}
 
 document.getElementById('numero-form').addEventListener('submit', (event) => {
   event.preventDefault();
@@ -278,7 +351,7 @@ document.getElementById('numero-form').addEventListener('submit', (event) => {
   const firstNamesRaw = document.getElementById('firstnames').value.trim();
   const birthdate = document.getElementById('birthdate').value;
 
-  if (!lastName || !firstNamesRaw || !birthdate) return;
+  if (!validateProfileForm(lastName, firstNamesRaw, birthdate)) return;
 
   const allFirstNames = firstNamesRaw.split(/\s+/).filter(Boolean);
   const firstName = allFirstNames[0];
@@ -304,11 +377,19 @@ document.getElementById('numero-form').addEventListener('submit', (event) => {
 
   document.getElementById('results').hidden = false;
   document.getElementById('rdv-result').hidden = true;
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 });
 
 document.getElementById('rdv-btn').addEventListener('click', () => {
   const rdvDate = document.getElementById('rdv-date').value;
-  if (!rdvDate || !currentBirth) return;
+
+  clearError('rdv-date');
+
+  if (!rdvDate) {
+    showError('rdv-date', 'Choisissez une date de rendez-vous.');
+    return;
+  }
+  if (!currentBirth) return;
 
   const number = calcRendezVous(currentBirth, rdvDate);
   const resultBox = document.getElementById('rdv-result');
@@ -316,5 +397,10 @@ document.getElementById('rdv-btn').addEventListener('click', () => {
   resultBox.innerHTML = `
     <div class="number">${number}</div>
     <div class="desc">Jour + mois du rendez-vous + année personnelle correspondante.</div>
+    <div class="meaning">${meaningOf(number)}</div>
   `;
+});
+
+document.getElementById('print-btn').addEventListener('click', () => {
+  window.print();
 });

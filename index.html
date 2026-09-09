@@ -13,24 +13,31 @@
       <p class="subtitle">Découvrez les nombres qui vous définissent</p>
     </header>
 
-    <form id="numero-form" class="card">
+    <form id="numero-form" class="card" novalidate>
       <div class="field">
         <label for="lastname">Nom de famille à la naissance</label>
         <input type="text" id="lastname" placeholder="ex : Dabadie" required autocomplete="off">
+        <small class="error" id="lastname-error" hidden></small>
       </div>
       <div class="field">
         <label for="firstnames">Prénom(s) (séparés par un espace)</label>
         <input type="text" id="firstnames" placeholder="ex : Pascal Marc Armand" required autocomplete="off">
         <small class="hint">Le premier prénom saisi est utilisé comme prénom usuel.</small>
+        <small class="error" id="firstnames-error" hidden></small>
       </div>
       <div class="field">
         <label for="birthdate">Date de naissance</label>
         <input type="date" id="birthdate" required>
+        <small class="error" id="birthdate-error" hidden></small>
       </div>
       <button type="submit">Calculer mon profil complet</button>
     </form>
 
     <section id="results" class="results" hidden>
+
+      <div class="results-actions">
+        <button type="button" id="print-btn">Télécharger / imprimer en PDF</button>
+      </div>
 
       <h2 class="section-title">Les piliers</h2>
       <div class="grid" id="pillars-grid"></div>
@@ -56,6 +63,7 @@
         <div class="field">
           <label for="rdv-date">Date du rendez-vous</label>
           <input type="date" id="rdv-date">
+          <small class="error" id="rdv-date-error" hidden></small>
         </div>
         <button type="button" id="rdv-btn">Calculer le nombre du jour</button>
         <div id="rdv-result" class="rdv-result" hidden></div>
