@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme="gold"] {
   --bg: #0f1220;
   --bg-alt: #171b30;
   --card: #1c2140;
@@ -9,6 +10,50 @@
   --border: rgba(255, 255, 255, 0.08);
 }
 
+[data-theme="violet"] {
+  --bg: #16121f;
+  --bg-alt: #1e1830;
+  --card: #241d3a;
+  --text: #f2eefc;
+  --text-dim: #b3a8cf;
+  --accent: #b083f0;
+  --accent-soft: rgba(176, 131, 240, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="emerald"] {
+  --bg: #0c1a16;
+  --bg-alt: #12241d;
+  --card: #172e25;
+  --text: #eafaf1;
+  --text-dim: #9fc3b3;
+  --accent: #4fd8a0;
+  --accent-soft: rgba(79, 216, 160, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="rose"] {
+  --bg: #1f1216;
+  --bg-alt: #2a1a20;
+  --card: #35212a;
+  --text: #fceef2;
+  --text-dim: #d4a6b6;
+  --accent: #e87fa0;
+  --accent-soft: rgba(232, 127, 160, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+  --bg: #f6f4ee;
+  --bg-alt: #ffffff;
+  --card: #ffffff;
+  --text: #221f2c;
+  --text-dim: #6b6578;
+  --accent: #a5762f;
+  --accent-soft: rgba(165, 118, 47, 0.12);
+  --border: rgba(0, 0, 0, 0.1);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -17,7 +62,8 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: 'Georgia', 'Iowan Old Style', serif;
-  background: radial-gradient(circle at top, #232852 0%, var(--bg) 60%);
+  background: radial-gradient(circle at top, var(--bg-alt) 0%, var(--bg) 60%);
+  transition: background 0.2s ease, color 0.2s ease;
   color: var(--text);
   display: flex;
   justify-content: center;
@@ -30,9 +76,37 @@ body {
 }
 
 .app-header {
+  position: relative;
   text-align: center;
   margin-bottom: 28px;
 }
+
+.theme-switcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 6px;
+}
+
+.theme-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-dot.active {
+  border-color: var(--text);
+}
+
+.theme-dot[data-theme-option="gold"] { background: #c9a94f; }
+.theme-dot[data-theme-option="violet"] { background: #b083f0; }
+.theme-dot[data-theme-option="emerald"] { background: #4fd8a0; }
+.theme-dot[data-theme-option="rose"] { background: #e87fa0; }
+.theme-dot[data-theme-option="light"] { background: #a5762f; }
 
 .app-header h1 {
   margin: 0;
@@ -242,10 +316,6 @@ input.invalid {
   border-radius: 12px;
   padding: 14px 8px;
   text-align: center;
-}
-
-.inclusion-cell.empty {
-  opacity: 0.4;
 }
 
 .inclusion-cell .digit {
