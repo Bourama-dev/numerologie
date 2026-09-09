@@ -209,8 +209,8 @@ function renderInclusionGrid(counts) {
     const count = counts[digit];
     cell.className = 'inclusion-cell' + (count === 0 ? ' empty' : '');
     cell.innerHTML = `
-      <div class="digit">${digit}</div>
-      <div class="repeat">${count > 0 ? digit.toString().repeat(count) : '—'}</div>
+      <div class="digit">Nombre de ${digit}</div>
+      <div class="repeat">${count}</div>
     `;
     container.appendChild(cell);
   });
