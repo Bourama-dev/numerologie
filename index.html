@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numérologie</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>✧ Numérologie</h1>
+      <p class="subtitle">Découvrez les nombres qui vous définissent</p>
+    </header>
+
+    <form id="numero-form" class="card">
+      <div class="field">
+        <label for="fullname">Nom complet de naissance</label>
+        <input type="text" id="fullname" placeholder="ex : Marie Claire Dupont" required autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="birthdate">Date de naissance</label>
+        <input type="date" id="birthdate" required>
+      </div>
+      <button type="submit">Calculer mon profil</button>
+    </form>
+
+    <section id="results" class="results" hidden>
+      <div class="grid" id="results-grid"></div>
+    </section>
+
+    <footer class="app-footer">
+      <p>Les calculs suivent la numérologie pythagoricienne. Les nombres maîtres (11, 22, 33) sont préservés.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
