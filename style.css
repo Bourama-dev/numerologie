@@ -244,10 +244,6 @@ input.invalid {
   text-align: center;
 }
 
-.inclusion-cell.empty {
-  opacity: 0.4;
-}
-
 .inclusion-cell .digit {
   font-size: 1rem;
   color: var(--text-dim);
